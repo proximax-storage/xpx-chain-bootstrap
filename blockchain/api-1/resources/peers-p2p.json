@@ -1,0 +1,42 @@
+{
+  "_info": "this file contains a list of all trusted peers and can be shared",
+  "knownPeers": [
+  {
+    "publicKey": "509DE0EBD43426007D16CD2E61B9094E23C8343DCF967D163BA4E20EF8379EAE",
+    "endpoint": {
+      "host": "p2p-1",
+      "port": 7900
+    },
+    "metadata": {
+      "name": "p2p-1",
+      "roles": "Peer"
+    }
+  },
+  {
+    "publicKey": "84F98A124121672DCBC9681E899FFA5AADD3E500E61C211F39EA563DEAEA6973",
+    "endpoint": {
+      "host": "p2p-2",
+      "port": 7900
+    },
+    "metadata": {
+      "name": "p2p-2",
+      "roles": "Peer"
+    }
+  },
+  {
+    "publicKey": "ECA4CD4D87330CBE6666790C723AE48D156450E28E3B8F28500BC0048C2CA8A0",
+    "endpoint": {
+      "host": "p2p-3",
+      "port": 7900
+    },
+    "metadata": {
+      "name": "p2p-3",
+      "roles": "Peer"
+    }
+  }
+  ]
+}
+
+
+
+

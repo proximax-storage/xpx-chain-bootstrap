@@ -1,0 +1,62 @@
+version: "3.6"
+services:
+  db:
+    image: mongo:4.2.0-bionic
+    command: bash -c "mongod --dbpath=/dbdata --bind_ip=db"
+    stop_signal: SIGINT
+    volumes:
+    - ./api-1/mongodata:/dbdata:rw
+
+  init-db:
+    image: mongo:4.2.0-bionic
+    command:  bash -c "/bin/bash /userconfig/mongors.sh"
+    volumes:
+    - ./api-1/mongodata:/dbdata:rw
+    - ./api-1/scripts/mongo:/userconfig/:ro
+    depends_on:
+    - db
+
+  api-1:
+    image: proximax/proximax-sirius-chain-private:v0.5.0-bionic
+    volumes:
+      - ./api-1:/chainconfig
+      - ./api-1/data:/data:rw
+      - ./api-1/logs:/logs:rw
+    entrypoint: /bin/bash
+    command: -c "rm -f /data/server.lock && /sirius/bin/sirius.bc /chainconfig"
+
+  rest-gateway:
+    image: proximax/proximax-sirius-rest-private:v0.5.0
+    ports:
+    - "3000:3000"
+    volumes:
+    - ./api-1/restuserconfig/rest.json:/node_modules/catapult-api-rest/resources/rest.json
+    command: ash -c "yarn start"
+  
+  p2p-1:
+    image: proximax/proximax-sirius-chain-private:v0.5.0-bionic
+    volumes:
+      - ./p2p-1:/chainconfig
+      - ./p2p-1/data:/data:rw
+      - ./p2p-1/logs:/logs:rw
+    entrypoint: /bin/bash
+    command: -c "rm -f /data/server.lock && /sirius/bin/sirius.bc /chainconfig"
+  
+  p2p-2:
+    image: proximax/proximax-sirius-chain-private:v0.5.0-bionic
+    volumes:
+      - ./p2p-2:/chainconfig
+      - ./p2p-2/data:/data:rw
+      - ./p2p-2/logs:/logs:rw
+    entrypoint: /bin/bash
+    command: -c "rm -f /data/server.lock && /sirius/bin/sirius.bc /chainconfig"
+  
+  p2p-3:
+    image: proximax/proximax-sirius-chain-private:v0.5.0-bionic
+    volumes:
+      - ./p2p-3:/chainconfig
+      - ./p2p-3/data:/data:rw
+      - ./p2p-3/logs:/logs:rw
+    entrypoint: /bin/bash
+    command: -c "rm -f /data/server.lock && /sirius/bin/sirius.bc /chainconfig"
+  

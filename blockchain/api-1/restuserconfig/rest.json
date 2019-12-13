@@ -1,0 +1,67 @@
+{
+    "network": {
+        "name": "privateTest",
+        "description": "ProximaX Sirius Chain Bootstrap Network"
+    },
+
+    "port": 3000,
+    "crossDomainHttpMethods": ["GET", "POST", "PUT", "OPTIONS"],
+    "cors": "*",
+    "clientPrivateKey": "6721C93A44CA70848875363A0C1541674793DF969BE6B81406E078525E1642FA",
+    "extensions": ["accountLink", "accountProperties", "aggregate", "exchange", "config", "lock", "metadata", "mosaic", "multisig", "namespace", "receipts", "service", "transfer", "upgrade"],
+    "db": {
+        "url": "mongodb://db:27017/",
+        "name": "catapult",
+        "pageSizeMin": 10,
+        "pageSizeMax": 100,
+        "pageSizeStep": 25,
+        "maxConnectionAttempts": 5,
+        "baseRetryDelay": 500
+    },
+
+    "apiNode": {
+        "host": "api-1",
+        "port": 7900,
+        "publicKey": "145564A8E7C5EC27878BD75E3A52C7F1F8C399E4777A63CB9088BD4A114016AB",
+        "timeout": 1000
+    },
+
+    "transactionCache": {
+        "flushFrequency": 1500
+    },
+
+    "websocket": {
+        "mq": {
+            "host": "api-1",
+            "port": 7902,
+            "monitorInterval": 500,
+            "connectTimeout": 10000,
+            "monitorLoggingThrottle": 60000
+        },
+        "allowOptionalAddress": true
+    },
+
+    "throttling": {
+        "burst": 20,
+        "rate": 5
+    },
+
+    "logging": {
+        "console": {
+            "colorize": true,
+            "level": "verbose",
+            "handleExceptions": true,
+            "prettyPrint": true,
+            "timestamp": true
+        },
+        "file": {
+            "level": "verbose",
+            "handleExceptions": true,
+            "prettyPrint": true,
+            "timestamp": true,
+            "filename": "/logs/catapult-rest.log",
+            "maxsize": 20971520,
+            "maxFiles": 100
+        }
+    }
+}
