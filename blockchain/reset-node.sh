@@ -21,11 +21,26 @@ if [[ ${valid_node} -eq 0 ]]
 fi
 
 
-rm -R $1/data/*
-cp -R seed_data/* ./$1/data/
+echo "backing up nemesis block"
+mv $1/data/00000/00001.dat $1/data/00000/hashes.dat /tmp
+echo "deleting data directory"
 
-if [[ "$1" == "api-1" ]]
-    then
-        rm -R $1/mongodata/
-        mkdir $1/mongodata/
+for dir in $1/data/*; do
+    rm -rf $dir
+done
+
+if [ -d "$1/mongodata" ]; then
+    echo "deleting mongodata directory"
+    for dir in $1/mongodata/*; do
+        sudo rm -rf $dir
+    done
 fi
+
+mkdir $1/data/00000
+mv /tmp/00001.dat /tmp/hashes.dat $1/data/00000/
+
+if [ ! -f "$1/data/index.dat" ]; then
+    echo "No index.dat file, creating now...."
+    echo -ne "\01\0\0\0\0\0\0\0" > $1/data/index.dat
+fi
+echo "$1 data has been reset to nemesis block"
