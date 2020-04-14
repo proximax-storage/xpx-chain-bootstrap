@@ -7,18 +7,10 @@ services:
     entrypoint: mongod
     command: --dbpath=/dbdata --bind_ip=db
     stop_signal: SIGINT
+    restart: on-failure:3
     volumes:
     - ./api-1/mongodata:/dbdata:rw
     - ./api-1/scripts/mongo:/docker-entrypoint-initdb.d:ro
-
-  # init-db:
-  #   image: mongo:4.2.5-bionic
-  #   command:  bash -c "/bin/bash /userconfig/mongors.sh"
-  #   volumes:
-  #   - ./api-1/mongodata:/dbdata:rw
-  #   - ./api-1/scripts/mongo:/userconfig/:ro
-  #   depends_on:
-  #   - db
 
   api-1:
     image: proximax/proximax-sirius-chain:v0.6.1-buster
@@ -26,6 +18,7 @@ services:
       - ./api-1:/chainconfig
       - ./api-1/data:/data:rw
       - ./api-1/logs:/logs:rw
+      - ./api-1/mongodata:/dbdata:rw
     restart: on-failure:3
     entrypoint: /chainconfig/entrypoint.sh
 
